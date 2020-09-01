@@ -47,17 +47,49 @@ def formatear(clase: List) -> str:
 def start(update, context):
     """Send a message when the command /start is issued."""
     update.message.reply_text("Hola humano")
-    update.message.reply_text("Toma tus mugrosas clases")
+    update.message.reply_text(
+        "Usa /clases para obtener las clases que hayan sido agregadas"
+    )
+
+
+def clases(update, context):
+    """ Envía un mensaje por cada nueva clase """
+
+    update.message.reply_text("Veamos si hay nuevas clases")
 
     items = helper.get_rows()
 
-    # Excluir las filas con datos innecesarios
+    # Excluir las filas con datos innecesarios (Primeras 2)
     clases = items[2:]
 
-    for clase in clases:
+    # Leer la constante
+    with open("clases.txt", "r") as file:
+        num_clases_viejas = file.read()
+
+    num_clases_viejas = int(num_clases_viejas)
+
+    if len(clases) == num_clases_viejas:
+        update.message.reply_text("Nada nuevo perro 🧔🏼")
+        return
+
+    update.message.reply_text("Tome sus mugrosas clases Richetta 🧔🏼")
+    
+    # Para separar las nuevas clases recorremos la lista
+    # a partir del índice, que corresponde al num de clases anterior
+    clases_nuevas: List[str] = clases[num_clases_viejas:]
+
+    for clase in clases_nuevas:
         mensaje = formatear(clase)
         time.sleep(1)
         update.message.reply_text(mensaje)
+
+    # Guardamos el nuevo num de clases
+    with open("clases.txt", "w") as file:
+        nuevo_num = str(len(clases))
+        file.write(nuevo_num)
+
+    time.sleep(1)
+    update.message.reply_text("Eso es todo mugroso estudiante 🧔🏼")
 
 
 def timer():
@@ -73,8 +105,10 @@ def main():
     dispatcher = updater.dispatcher
 
     start_handler = CommandHandler("start", start)
+    clases_handler = CommandHandler("clases", clases)
 
     dispatcher.add_handler(start_handler)
+    dispatcher.add_handler(clases_handler)
 
     updater.start_polling()
     print("Arrancó")
