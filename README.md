@@ -11,15 +11,15 @@
     - Descargar el archivo `credentials.json` (:warning: No compartas este archivo)
     - Ubicarlo en la raíz de este directorio junto a `gsheets.py` y `telegram_bot.py`
 
-2. [Crear tu bot de Telegram](https://core.telegram.org/bots#6-botfather)
+2. `git clone https://github.com/marcorichetta/sheet-bot.git`
 
-3. Renombrar el archivo `.env.template` => `.env` (:warning: No compartas este archivo)
+3. [Crear tu bot de Telegram](https://core.telegram.org/bots#6-botfather)
 
-4. Completar con tu token y el ID de la spreadsheet (Asegurate de poder acceder con tu usuario de Google o de que sea pública)
+4. Renombrar el archivo `.env.template` => `.env` (:warning: No compartas este archivo)
+
+5. Completar con tu token y el ID de la spreadsheet (Asegurate de poder acceder con tu usuario de Google o de que sea pública)
 
 ```bash
-git clone https://github.com/marcorichetta/sheet-bot.git
-
 # Crear virtualenv (Recomendado)
 python3 -m venv env
 
@@ -32,3 +32,13 @@ pip install -r requirements.txt
 # Ejecutar el bot
 python telegram_bot.py
 ```
+
+### Autorización
+
+La primera vez que se ejecuta el bot se te pedirá que ingreses a un link para autorizar a tu app.
+
+```bash
+Please visit this URL to authorize this application: https://accounts.google.com/o/oauth2/auth?response_type=...
+```
+
+Una vez completada la autorización de Google, se creará un archivo [`token.pickle`](https://docs.python.org/3/library/pickle.html), el cual contiene los tokens de acceso para leer la spreadsheet.
