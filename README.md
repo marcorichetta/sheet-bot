@@ -42,3 +42,11 @@ Please visit this URL to authorize this application: https://accounts.google.com
 ```
 
 Una vez completada la autorización de Google, se creará un archivo [`token.pickle`](https://docs.python.org/3/library/pickle.html), el cual contiene los tokens de acceso para leer la spreadsheet.
+
+### Configurar como servicio de systemd (Raspberry Pi)
+
+Para que el programa inicie cuando la Raspi se prenda, podemos configurarlo como un servicio de systemd.
+
+La [documentación de Raspberry](https://www.raspberrypi.org/documentation/linux/usage/systemd.md) explica esto de manera simple.
+
+-   Yo puse `Restart=on-failure` para que sólo se reinicie en caso de error. [Info](https://www.freedesktop.org/software/systemd/man/systemd.service.html#Restart=)
